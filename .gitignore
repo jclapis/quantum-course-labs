@@ -1,0 +1,8 @@
+.vs
+.venv
+.vscode
+*.zip
+.vs/
+bin/
+obj/
+__pycache__
