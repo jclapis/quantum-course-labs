@@ -38,6 +38,11 @@ namespace QSharpExercises.Lab9 {
 		output : Qubit[]
 	) : Unit
     {
+        // Note: for convenience, you can use the Microsoft.Quantum.Math.ExpModI()
+        // function to calculate a modular exponent classically.
+        // You can use the Microsoft.Quantum.Arithmetic.MultiplyByModularInteger()
+        // function to do an in-place quantum modular multiplication.
+
         // TODO
         fail "Not implemented.";
     }
@@ -74,6 +79,15 @@ namespace QSharpExercises.Lab9 {
 		guess : Int
 	) : (Int, Int)
     {
+        // Hint: you can use the Microsoft.Quantum.Arithmetic.MeasureInteger()
+        // function to measure a whole set of qubits and transform them into their
+        // integer representation.
+
+        // NOTE: This is a *probablistic* test. There is a chance that the unit test
+        // fails, even if you have the correct answer. If you think you do,
+        // run the test again. Also, look at the output of the test to see what
+        // values you came up with versus what the system expects.
+
         // TODO
         fail "Not implemented.";
     }
@@ -138,6 +152,13 @@ namespace QSharpExercises.Lab9 {
     /// The period of y = guess^x mod numberToFactor.
     operation Exercise4 (numberToFactor : Int, guess : Int) : Int
     {
+        // Note: you can't use while loops in operations in Q#.
+        // You'll have to use a repeat loop if you want to run
+        // something several times.
+
+        // Hint: you can use the Microsoft.Quantum.Math.GreatestCommonDivisorI()
+        // function to calculate the GCD of two numbers.
+
         // TODO
         fail "Not implemented.";
     }
