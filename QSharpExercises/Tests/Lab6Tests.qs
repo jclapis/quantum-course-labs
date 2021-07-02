@@ -1,7 +1,7 @@
-﻿// Tests for Lab 7: Grover's Algorithm
+﻿// Tests for Lab 6: Grover's Algorithm
 // Copyright 2021 The MITRE Corporation. All Rights Reserved.
 
-namespace QSharpExercises.Tests.Lab7 {
+namespace QSharpExercises.Tests.Lab6 {
 
     open Microsoft.Quantum.Convert;
     open Microsoft.Quantum.Canon;
@@ -9,8 +9,8 @@ namespace QSharpExercises.Tests.Lab7 {
     open Microsoft.Quantum.Intrinsic;
     open Microsoft.Quantum.Random;
 
-    open QSharpExercises.Lab7;
-    // open QSharpExercises.Solutions.Lab7;
+    open QSharpExercises.Lab6;
+    // open QSharpExercises.Solutions.Lab6;
 
 
     @Test("QuantumSimulator")

@@ -6,7 +6,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace QSharpExercises.Tests.Lab6
+namespace QSharpExercises.Tests.Lab7
 {
     /// <summary>
     /// This class contains helper / utility functions that can do the processing

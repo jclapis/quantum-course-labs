@@ -1,5 +1,5 @@
 ﻿/*
- * C# Tests for Lab 6: Simon's Algorithm
+ * C# Tests for Lab 7: Simon's Algorithm
  * Copyright 2021 The MITRE Corporation. All Rights Reserved.
  */
 
@@ -13,10 +13,10 @@ using System.Text;
 using Xunit;
 using Xunit.Abstractions;
 
-using QSharpExercises.Lab6;
-// using QSharpExercises.Solutions.Lab6;
+using QSharpExercises.Lab7;
+// using QSharpExercises.Solutions.Lab7;
 
-namespace QSharpExercises.Tests.Lab6
+namespace QSharpExercises.Tests.Lab7
 {
     /// <summary>
     /// This class contains the classical portion of Simon's Algorithm, and

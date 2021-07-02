@@ -1,15 +1,15 @@
-﻿// Tests for Lab 6: Simon's Algorithm
+﻿// Tests for Lab 7: Simon's Algorithm
 // Copyright 2021 The MITRE Corporation. All Rights Reserved.
 
-namespace QSharpExercises.Tests.Lab6 {
+namespace QSharpExercises.Tests.Lab7 {
 
     open Microsoft.Quantum.Canon;
     open Microsoft.Quantum.Diagnostics;
     open Microsoft.Quantum.Intrinsic;
     open Microsoft.Quantum.Random;
 
-    open QSharpExercises.Lab6;
-    // open QSharpExercises.Solutions.Lab6;
+    open QSharpExercises.Lab7;
+    // open QSharpExercises.Solutions.Lab7;
 
 
     @Test("QuantumSimulator")
