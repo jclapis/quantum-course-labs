@@ -70,9 +70,8 @@ namespace QSharpExercises.Lab5 {
         // same effect as not flipping it at all. Phase-flipping it three
         // times will have the same effect as only flipping it once, etc.
         
-        for qubit in input {
-            Controlled Z([qubit], output);
-        }
+        // TODO
+        fail "Not implemented.";
     }
 
 
