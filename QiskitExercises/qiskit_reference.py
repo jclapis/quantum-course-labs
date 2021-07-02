@@ -150,57 +150,10 @@ def run_example_on_hardware(example):
         print(f"Measured {big_endian_state} {count} times.")
 
 
-def estimate_resources(example):
-    """
-    Sets up and executes one of the example circuits.
-
-    Parameters:
-        example (function): The example function that will build the requested circuit.
-    """
-    
-    qubits = QuantumRegister(3)
-    measurement = ClassicalRegister(3)
-    circuit = QuantumCircuit(qubits, measurement)
-    
-    # Build the circuit
-    start = perf_counter()
-    example(circuit, qubits)
-    circuit.measure(qubits, measurement)
-    end = perf_counter()
-    print(f"Circuit construction took {(end - start)} sec.")
-    print(circuit)
-    
-    # Transpile the circuit to something that can run on the Santiago machine
-    provider = IBMQ.load_account()
-    machine = "ibmq_santiago"
-    backend = provider.get_backend(machine)
-    print(f"Transpiling for {machine}...")
-    start = perf_counter()
-    circuit = transpile(circuit, backend=backend, optimization_level=1)
-    end = perf_counter()
-    print(f"Compiling and optimizing took {(end - start)} sec.")
-    print(circuit)
-
-    # Get the number of qubits needed to run the circuit
-    active_qubits = {}
-    for op in circuit.data:
-        if op[0].name != "barrier" and op[0].name != "snapshot":
-            for qubit in op[1]:
-                    active_qubits[qubit.index] = True
-    print(f"Width: {len(active_qubits)} qubits")
-
-    # Get some other metrics
-    print(f"Depth: {circuit.depth()}")
-    print(f"Gate counts: {circuit.count_ops()}")
-
-
 # Code runner - change the method below to run a different example
 if __name__ == '__main__':
     # Uncomment this line to run a circuit locally on a simulator
-    #run_example_on_simulator(example_1)
+    run_example_on_simulator(example_1)
 
     # Uncomment this line to run a circuit on a real quantum machine
     #run_example_on_hardware(example_1)
-
-    # Uncomment this line to explore the compiled assembly of a circuit without running it
-    estimate_resources(example_1)
