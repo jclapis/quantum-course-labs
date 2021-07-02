@@ -17,6 +17,8 @@ These labs are intended to be used with the following environment:
 - Python 3.8+
 - [Qiskit](https://pypi.org/project/qiskit/) v0.27.0+
 
+For the course guide that accompanies these labs, please see [the docs repository](https://github.com/jclapis/quantum-course-docs).
 
 Copyright © 2021 The MITRE Corporation. ALL RIGHTS RESERVED.
+
 Approved for Public Release; Distribution Unlimited. Public Release Case Number 21-1765.
