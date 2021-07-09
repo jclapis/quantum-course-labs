@@ -178,7 +178,7 @@ namespace QSharpExercises.Lab3 {
     /// 
     /// Note: this state will have a 50% chance of being measured as |00>, a
     /// 25% chance of being measured as |10>, and a 25% chance of being
-    /// measured as |01>.
+    /// measured as |11>.
     /// 
     /// # Input
     /// ## register
