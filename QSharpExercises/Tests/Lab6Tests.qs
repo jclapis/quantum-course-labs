@@ -112,7 +112,7 @@ namespace QSharpExercises.Tests.Lab6 {
 
     @Test("QuantumSimulator")
     operation Exercise3Test () : Unit {
-        for i in 1 .. 10 {
+        for i in 1 .. 50 {
             for numQubits in 3 .. 8 {
                 mutable original = new Bool[0];
                 mutable key = new Bool[0];
@@ -124,28 +124,26 @@ namespace QSharpExercises.Tests.Lab6 {
                 }
 
                 use (qubits, target) = (Qubit[numQubits], Qubit());
-
-                mutable randomRotations = new Double[][0];
-                for j in 0 .. numQubits - 1 {
-                    set randomRotations += [GenerateRandomRotation()];
-                    ApplyRotation(randomRotations[i], qubits[i]);
-                }
-                H(target);
+                ApplyToEach(H, qubits + [target]);
 
                 Exercise3(original, encrypted, qubits, target);
 
-                Exercise1(original, qubits);
-                Exercise1(encrypted, qubits);
-                Exercise2(qubits, target);
-                Exercise1(original, qubits);
-                Exercise1(encrypted, qubits);
                 H(target);
 
+                mutable foundCorrectKey = true;
                 for j in 0 .. numQubits - 1 {
-                    Adjoint ApplyRotation(randomRotations[i], qubits[i]);
+                    if (M(qubits[j]) == One) != key[j] {
+                        set foundCorrectKey = false;
+                    }
                 }
 
-                AssertAllZero(qubits + [target]);
+                EqualityFactB(
+                    M(target) == One,
+                    foundCorrectKey,
+                    "CheckKey test failed"
+                );
+
+                ResetAll(qubits);
             }
         }
 
