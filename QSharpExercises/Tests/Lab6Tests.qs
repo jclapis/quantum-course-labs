@@ -1,4 +1,4 @@
-﻿// Tests for Lab 6: Grover's Algorithm
+// Tests for Lab 6: Grover's Algorithm
 // Copyright 2021 The MITRE Corporation. All Rights Reserved.
 
 namespace QSharpExercises.Tests.Lab6 {
@@ -11,10 +11,11 @@ namespace QSharpExercises.Tests.Lab6 {
 
     open QSharpExercises.Lab6;
     // open QSharpExercises.Solutions.Lab6;
+    open QSharpExercises.Tests.Utils;
 
 
     @Test("QuantumSimulator")
-    operation Exercise1XorTest () : Unit {
+    operation Exercise1Test () : Unit {
         let testCases = [
             [false, true, true],
             [true, false, true, true],
@@ -50,10 +51,22 @@ namespace QSharpExercises.Tests.Lab6 {
 
             ResetAll(qubits);
         }
+
+        // Ensure qubits are not being measured
+        use qubit = Qubit();
+        let rotation = GenerateRandomRotation();
+        ApplyRotation(rotation, qubit);
+
+        Exercise1([true], [qubit]);
+
+        X(qubit);
+        Adjoint ApplyRotation(rotation, qubit);
+
+        AssertAllZero([qubit]);
     }
 
     @Test("QuantumSimulator")
-    operation Exercise2AllZerosTest () : Unit {
+    operation Exercise2Test () : Unit {
         for i in 0 .. 50 {
             for numQubits in 3 .. 8 {
                 use (qubits, target) = (Qubit[numQubits], Qubit());
@@ -79,11 +92,27 @@ namespace QSharpExercises.Tests.Lab6 {
                 ResetAll(qubits + [target]);
             }
         }
+
+        // Ensure qubits are not being measured
+        use (qubit, target) = (Qubit(), Qubit());
+        let rotation = GenerateRandomRotation();
+        ApplyRotation(rotation, qubit);
+        H(target);
+
+        Exercise2([qubit], target);
+
+        X(qubit);
+        Controlled Z([qubit], target);
+        X(qubit);
+        Adjoint ApplyRotation(rotation, qubit);
+        H(target);
+
+        AssertAllZero([qubit] + [target]);
     }
 
     @Test("QuantumSimulator")
-    operation Exercise3CheckKeyTest () : Unit {
-        for i in 1 .. 50 {
+    operation Exercise3Test () : Unit {
+        for i in 1 .. 10 {
             for numQubits in 3 .. 8 {
                 mutable original = new Bool[0];
                 mutable key = new Bool[0];
@@ -95,28 +124,46 @@ namespace QSharpExercises.Tests.Lab6 {
                 }
 
                 use (qubits, target) = (Qubit[numQubits], Qubit());
-                ApplyToEach(H, qubits + [target]);
+
+                mutable randomRotations = new Double[][0];
+                for j in 0 .. numQubits - 1 {
+                    set randomRotations += [GenerateRandomRotation()];
+                    ApplyRotation(randomRotations[i], qubits[i]);
+                }
+                H(target);
 
                 Exercise3(original, encrypted, qubits, target);
 
+                Exercise1(original, qubits);
+                Exercise1(encrypted, qubits);
+                Exercise2(qubits, target);
+                Exercise1(original, qubits);
+                Exercise1(encrypted, qubits);
                 H(target);
 
-                mutable foundCorrectKey = true;
                 for j in 0 .. numQubits - 1 {
-                    if (M(qubits[j]) == One) != key[j] {
-                        set foundCorrectKey = false;
-                    }
+                    Adjoint ApplyRotation(randomRotations[i], qubits[i]);
                 }
 
-                EqualityFactB(
-                    M(target) == One,
-                    foundCorrectKey,
-                    "CheckKey test failed"
-                );
-
-                ResetAll(qubits);
+                AssertAllZero(qubits + [target]);
             }
         }
+
+        // Ensure qubits are not being measured
+        use (qubit, target) = (Qubit(), Qubit());
+        let rotation = GenerateRandomRotation();
+        ApplyRotation(rotation, qubit);
+        H(target);
+
+        Exercise3([true], [true], [qubit], target);
+
+        X(qubit);
+        Controlled Z([qubit], target);
+        X(qubit);
+        Adjoint ApplyRotation(rotation, qubit);
+        H(target);
+
+        AssertAllZero([qubit] + [target]);
     }
 
     @Test("QuantumSimulator")
