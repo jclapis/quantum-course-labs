@@ -1,4 +1,4 @@
-﻿// Tests for Lab 5: Deutsch-Jozsa Algorithm
+// Tests for Lab 5: Deutsch-Jozsa Algorithm
 // Copyright 2021 The MITRE Corporation. All Rights Reserved.
 
 namespace QSharpExercises.Tests.Lab5 {
@@ -8,80 +8,50 @@ namespace QSharpExercises.Tests.Lab5 {
     open Microsoft.Quantum.Intrinsic;
     open Microsoft.Quantum.Random;
 
-    open QSharpExercises.Lab5;
-    // open QSharpExercises.Solutions.Lab5;
+    // open QSharpExercises.Lab5;
+    open QSharpExercises.Solutions.Lab5;
 
 
     @Test("QuantumSimulator")
     operation Exercise1Test () : Unit {
-        for i in 1 .. 100 {
-            for numQubits in 3 .. 8 {
-                use (inputQubits, target) = (Qubit[numQubits], Qubit());
-                ApplyToEach(H, inputQubits);
-                H(target);
+        for numQubits in 3 .. 8 {
+            use (input, output) = (Qubit[numQubits], Qubit());
+            ApplyToEach(H, input);
+            X(output);
 
-                Exercise1(inputQubits, target);
+            Exercise1(input, output);
 
-                H(target);
-
-                mutable numberOfOnes = 0;
-                for qubit in inputQubits {
-                    if M(qubit) == One {
-                        set numberOfOnes += 1;
-                        X(qubit);
-                    }
-                }
-
-                let result = M(target);
-                if result == One {
-                    X(target);
-                }
-
-                if numberOfOnes % 2 == 0 and result != Zero {
-                    fail "Measured even number of qubits in the |1> state, "
-                       + "but target qubit was flipped.";
-                }
-                elif numberOfOnes % 2 == 1 and result != One {
-                    fail "Measured odd number of qubits in the |1> state, "
-                       + "but target qubit was not flipped.";
-                }
+            for qubit in input {
+              Controlled Z([qubit], output);
             }
+            X(output);
+            ApplyToEach(H, input);
+
+            AssertAllZero(input + [output]);
         }
     }
 
 
     @Test("QuantumSimulator")
     operation Exercise2Test () : Unit {
-        for i in 1 .. 100 {
+        for i in 1 .. 10 {
             for numQubits in 3 .. 8 {
-                use (inputQubits, target) = (Qubit[numQubits], Qubit());
+                use (input, output) = (Qubit[numQubits], Qubit());
                 let firstIndex = DrawRandomInt(0, numQubits - 1);
                 let temp = DrawRandomInt(0, numQubits - 2);
                 let secondIndex = firstIndex != temp ? temp | temp + 1;
 
-                ApplyToEach(H, inputQubits);
-                X(target);
+                ApplyToEach(H, input);
+                X(output);
 
-                Exercise2(firstIndex, secondIndex, inputQubits, target);
+                Exercise2(firstIndex, secondIndex, input, output);
 
-                X(target);
-                ApplyToEach(H, inputQubits);
+                Controlled Z([input[firstIndex]], output);
+                Controlled Z([input[secondIndex]], output);
+                X(output);
+                ApplyToEach(H, input);
 
-                for index in 0 .. numQubits - 1 {
-                    if index == firstIndex or index == secondIndex {
-                        if M(inputQubits[index]) != One {
-                            fail "Could not detect a parity check for the "
-                               + "qubits at the specified indices.";
-                        }
-                        X(inputQubits[index]);
-                    }
-                    else {
-                        if M(inputQubits[index]) != Zero {
-                            fail "Qubits other that the ones at the specified "
-                               + "indices were modified.";
-                        }
-                    }
-                }
+                AssertAllZero(input + [output]);
             }
         }
     }
@@ -89,7 +59,7 @@ namespace QSharpExercises.Tests.Lab5 {
 
     @Test("QuantumSimulator")
     operation Exercise3Test () : Unit {
-        for i in 0..10 {
+        for i in 0 .. 10 {
             for numQubits in 3 .. 8 {
                 let firstIndex = DrawRandomInt(0, numQubits - 1);
                     let temp = DrawRandomInt(0, numQubits - 2);
