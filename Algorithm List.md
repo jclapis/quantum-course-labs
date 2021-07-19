@@ -23,7 +23,7 @@ They serve as a great reference to use when practicing algorithm implementation.
 These are some algorithms that do basic arithmetic on integers.
 
 
-#### Full Adder
+#### Full Adder (Ripple Carry)
 
 This circuit adds two arbitrarily large integers together.
 
@@ -33,6 +33,14 @@ References with Circuit Diagrams:
 - Luo, J., Zhou, RG., Luo, G. et al. *Traceable Quantum Steganography Scheme Based on Pixel Value Differencing.* Sci Rep 9, 15134 (2019). [https://doi.org/10.1038/s41598-019-51598-8](https://doi.org/10.1038/s41598-019-51598-8)
 - Ma Y., Ma, H. and Chu, P. *Demonstration of Quantum Image Edge Extration Enhancement Through Improved Sobel Operator.* IEEE Access, vol. 8, pp. 210277-210285, 2020. [https://doi.org/10.1109/ACCESS.2020.3038891](https://doi.org/10.1109/ACCESS.2020.3038891)
 
+
+#### Carry Lookahead Adder
+
+This approach to addition reduces the gate depth at the expence of simplicity and modularity. It is a good idea to try and understand [the classical circuit](https://en.wikipedia.org/wiki/Carry-lookahead_adder) first, before attempting to implement it as a quantum program.
+
+References with Circuit Digarms:
+
+- Takahashi, Y., Tani, S. & Kunihiro, N. *Quantum Addition Circuits and Unbounded Fan-Out*. Quantum Information and Computation, Vol. 10, No. 9 & 10 (2010). [https://arxiv.org/abs/0910.2530](https://arxiv.org/abs/0910.2530)
 
 #### Two's Complement
 
@@ -90,6 +98,13 @@ References with Circuit Diagrams:
 
 - Ma Y., Ma, H. and Chu, P. *Demonstration of Quantum Image Edge Extration Enhancement Through Improved Sobel Operator.* IEEE Access, vol. 8, pp. 210277-210285, 2020. [https://doi.org/10.1109/ACCESS.2020.3038891](https://doi.org/10.1109/ACCESS.2020.3038891)
 - Luo, G., Zhou, RG. & Hu, W. *Efficient quantum steganography scheme using inverted pattern approach.* Quantum Inf Process 18, 222 (2019). [https://doi.org/10.1007/s11128-019-2341-3](https://doi.org/10.1007/s11128-019-2341-3)
+
+
+#### Alternate Approaches
+
+The following paper shows how to efficiently perform several modular and non-modular arithmetic operations using the QFT:
+
+- Ruiz-Perez, L. & Garcia-Escartin J. C. *Quantum arithmetic with the Quantum Fourier Transform.* Quantum Inf Process 16, 152 (2017). [https://arxiv.org/abs/1411.5949](https://arxiv.org/abs/1411.5949)
 
 
 ### Classical Data Encoding
